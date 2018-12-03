@@ -8,10 +8,19 @@ var ultimo_valor = "";
 
 
 teclas.forEach(function(e){//forEach es una propiedad que recorre todos los elementos del array
+
+	e.addEventListener("mousedown", function(){
+		var entrada = this.id;
+		if (entrada != "") {
+			document.getElementById(entrada).style = "transform: scale(0.98)";
+		}
+	})
+
 	e.addEventListener("click", function(){
 		var entrada = this.id;
 		if (entrada != "") {
 			console.log("En ForEach la entrada es: "+entrada);
+			document.getElementById(entrada).style = "transform: scale(1.0)";
       procesador(entrada);
 		}
 	})
@@ -74,9 +83,9 @@ function procesador(entrada){
 							if (entrada == "igual") {
 								if (valor =="") {//esto comprueba si se ha presionado = consecutivamente
 									valor = ultimo_valor;
-									console.log("El ultimo valor es: "+ultimo_valor)
+								} else {
+									ultimo_valor = valor;
 								};
-								ultimo_valor = valor;
 
 								calculadora(valor);
 
