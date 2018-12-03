@@ -4,6 +4,7 @@ var iniciar = true;
 var resultado = 0;
 var calc = true;
 var ultimaOperacion = "";
+var ultimo_valor = "";
 
 
 teclas.forEach(function(e){//forEach es una propiedad que recorre todos los elementos del array
@@ -28,10 +29,10 @@ function procesador(entrada){
 	}
 
 	if (entrada =="sign" && valor.indexOf("-") > -1) {
-		pantalla.textContent = "-"+valor;
-		valor = pantalla.textContent;
+		valor = valor.substring(1, valor.length);
+		pantalla.textContent = valor;
 		iniciar = false;
-		console.log("Salimos porque - se repite")
+		console.log("typeof valor");
 		return;
 	}
 
@@ -67,26 +68,32 @@ function procesador(entrada){
 				ultimaOperacion = entrada;
 				//console.log(ultimaOperacion);
 			} else {
-						if (valor == "0" && pantalla.textContent == "0") {
+						if (valor == "0" && pantalla.textContent == "0") {//comprueba que no se escriba mas de un 0
 							pantalla.textContent = entrada;
 						}else {
 							if (entrada == "igual") {
+								if (valor =="") {//esto comprueba si se ha presionado = consecutivamente
+									valor = ultimo_valor;
+									console.log("El ultimo valor es: "+ultimo_valor)
+								};
+								ultimo_valor = valor;
+
 								calculadora(valor);
-								resultado1 = resultado.toString();
+
+								var resultado1 = resultado.toString();
 								console.log(resultado1);
-								if (resultado1.length > 8) {
+								if (resultado1.length > 8) {//comprueba si la longitud del resultado es mayor de 8
 									pantalla.textContent = resultado1.substring(resultado1.length - 8);
 									console.log(resultado1.substring(resultado1.length - 8));
 								} else {
 									pantalla.textContent = resultado;
 									console.log("probando dos");
-								}
+								};
 
 								calc = true;
 								iniciar = true;
 							} else {
-								if (valor.length < 8) {
-									console.log("longitud del valor: "+valor.length);
+								if (valor.length < 8) {//comprueba la longitud del valor a escribir en pantalla <8
 									pantalla.textContent = valor + entrada;
 								}
 										console.log("el valor es: "+valor+" la entrada es: "+entrada);
